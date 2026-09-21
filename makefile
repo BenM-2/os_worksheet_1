@@ -1,11 +1,42 @@
+SRC = src/
+BUILD_DIR = build/
+EXE_DIR = $(BUILD_DIR)exec/
+NASM_FLAGS = -f elf -I $(SRC)
 
-add.out: add.o driver.o asm_io.o
-	gcc -m32 driver.o add.o asm_io.o -o add.out
-add.o:
-	nasm -f elf add.asm -o add.o
-driver.o:
-	gcc -m32 -c driver.c -o driver.o
-asm_io.o:
-	nasm -f elf asm_io.asm -o asm_io.o
-	
+.PHONY: all dirs clean
 
+# TODO task_1_2 task_2 task_3 task_4
+all: task_1  
+
+task_2: $(EXE_DIR)task_2
+task_3: $(EXE_DIR)task_3
+task_4: $(EXE_DIR)task_4
+
+dirs: 
+	mkdir -p $(BUILD_DIR) $(EXE_DIR)
+
+# Task_1_2
+task_1_2: $(EXE_DIR)task_1_2 
+$(EXE_DIR)task_1_2: $(BUILD_DIR)task_1_2.o $(BUILD_DIR)driver.o $(BUILD_DIR)asm_io.o
+	gcc -m32 $(BUILD_DIR)driver.o $(BUILD_DIR)task_1_2.o $(BUILD_DIR)asm_io.o -o $(EXE_DIR)task_1_2
+
+$(BUILD_DIR)task_1_2.o: | dirs
+	nasm $(NASM_FLAGS) $(SRC)task_1_2.asm -o $(BUILD_DIR)task_1_2.o
+
+# Task 1_1
+task_1: $(EXE_DIR)task_1
+$(EXE_DIR)task_1: $(BUILD_DIR)task_1.o $(BUILD_DIR)driver.o $(BUILD_DIR)asm_io.o
+	gcc -m32 $(BUILD_DIR)driver.o $(BUILD_DIR)task_1.o $(BUILD_DIR)asm_io.o -o $(EXE_DIR)task_1
+
+$(BUILD_DIR)task_1.o: | dirs
+	nasm $(NASM_FLAGS) $(SRC)task_1.asm -o $(BUILD_DIR)task_1.o
+
+# Common Build Dependencies 
+$(BUILD_DIR)driver.o: | dirs
+	gcc -m32 -c $(SRC)driver.c -o $(BUILD_DIR)driver.o
+
+$(BUILD_DIR)asm_io.o: | dirs
+	nasm $(NASM_FLAGS) $(SRC)asm_io.asm -o $(BUILD_DIR)asm_io.o
+
+clean:
+	rm -rf $(BUILD_DIR)
