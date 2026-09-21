@@ -6,7 +6,7 @@ NASM_FLAGS = -f elf -I $(SRC)
 .PHONY: all dirs clean
 
 # TODO task_1_2 task_2 task_3 task_4
-all: task_1  
+all: task_1  task_1_2
 
 task_2: $(EXE_DIR)task_2
 task_3: $(EXE_DIR)task_3
@@ -20,7 +20,7 @@ task_1_2: $(EXE_DIR)task_1_2
 $(EXE_DIR)task_1_2: $(BUILD_DIR)task_1_2.o $(BUILD_DIR)driver.o $(BUILD_DIR)asm_io.o
 	gcc -m32 $(BUILD_DIR)driver.o $(BUILD_DIR)task_1_2.o $(BUILD_DIR)asm_io.o -o $(EXE_DIR)task_1_2
 
-$(BUILD_DIR)task_1_2.o: | dirs
+$(BUILD_DIR)task_1_2.o:	$(SRC)task_1_2.asm | dirs
 	nasm $(NASM_FLAGS) $(SRC)task_1_2.asm -o $(BUILD_DIR)task_1_2.o
 
 # Task 1_1
@@ -28,7 +28,7 @@ task_1: $(EXE_DIR)task_1
 $(EXE_DIR)task_1: $(BUILD_DIR)task_1.o $(BUILD_DIR)driver.o $(BUILD_DIR)asm_io.o
 	gcc -m32 $(BUILD_DIR)driver.o $(BUILD_DIR)task_1.o $(BUILD_DIR)asm_io.o -o $(EXE_DIR)task_1
 
-$(BUILD_DIR)task_1.o: | dirs
+$(BUILD_DIR)task_1.o: $(SRC)task_1.asm| dirs
 	nasm $(NASM_FLAGS) $(SRC)task_1.asm -o $(BUILD_DIR)task_1.o
 
 # Common Build Dependencies 
