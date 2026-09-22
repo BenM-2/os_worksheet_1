@@ -1,0 +1,59 @@
+%include "asm_io.inc"
+
+segment .data
+    arr dd  1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100
+    range_lower_enter   db  "Enter lower bound: ",0 ;
+    range_lower_err     db  "Lower bound > 0 ",0    ;
+    range_upper_enter   db  "Enter upper bound: ",0 ;
+    range_upper_err     db  "Upper bound <= 100 ",0 ;
+    loop_count          dd  -1   ; Reserve loop count
+segment .bss
+    range_upper_int resd    1   ; Reserve upper bound 
+    range_lower_int resd    1   ; Reserve lower bound
+    
+    count           resd    1   ; Reserve total count
+segment .text
+    global asm_main
+    asm_main: 
+        enter 0,0
+        pusha
+        mov eax,range_lower_enter
+        call print_string
+        call read_int
+        mov [range_lower_int],eax
+
+        mov eax, range_upper_enter
+        call print_string
+        call read_int
+        mov [range_upper_int],eax
+        jmp count_loop
+        
+    count_loop:
+        ; Adding
+        mov ebx,[range_lower_int]
+        add ebx,[loop_count]
+
+        mov eax,[arr+ebx*4]    ; Load the current index into eax 
+        add eax,[count]               ; Add current count to number
+        mov [count],eax             ; Save count back to mem
+        ; loop increment
+        mov eax,[loop_count]
+        add eax,1
+        mov [loop_count],eax
+        ;loop break check
+        add eax,[range_lower_int]
+        cmp eax,[range_upper_int]
+        je print_count
+        jmp count_loop
+    
+    print_count:
+        call print_nl
+        mov eax,[count]
+        call print_int
+        call print_nl
+
+    close_program:
+        popa
+        mov eax,0
+        leave
+        ret
