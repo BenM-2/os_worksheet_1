@@ -29,5 +29,7 @@ For Testing Task 2 to check if all the loops where working correctly i used
 make task_2 && ./build/exec/task_2 > out.txt 
 ```
 This command builds task 2, runs it and pipes all outputs to out.txt overwriting all previous contents
-This allowed for me to see how many times the welcome message was printed
-
+This allowed for me to see how many times the welcome message was printed using 
+``` bash
+cat out.txt | grep -o "Welcome" * | wc -l
+```

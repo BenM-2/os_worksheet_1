@@ -5,7 +5,6 @@ segment.data
     welcome db  "Welcome",0         ; Welcome String
     lt50    db  "Enter a number > 50 ",0 ; 
     gt100   db  "Enter a number < 100",0 ;
-    fifty   dd  50                  ; Number 50
 segment .bss
     repeats resd    1   ; Reserve space for Number of repeats
 segment .text
