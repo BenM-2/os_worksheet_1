@@ -6,7 +6,19 @@ segment.data
     integer1    dd  15  ; First Int
     integer2    dd  6   ; Second Int
 ```
-In this section of code 2 varaibles are a
+In this section of code 2 varaibles are initalised as 2 double words = 4 bytes = standard int  in c
+When run the output is <br>
+![alt text](README_images/task_1_nums_15_6.png)<br>
+When these numbers have been changed 
+```
+segment.data
+    integer1    dd  10  ; First Int
+    integer2    dd  66  ; Second Int
+```
+![alt text](README_images/task_1_nums_10_66.png)
+
+This works by simply loading int1 into eax then adding int2 then printing it 
+
 
 # Task 1_2
 
