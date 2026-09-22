@@ -3,16 +3,22 @@ BUILD_DIR = build/
 EXE_DIR = $(BUILD_DIR)exec/
 NASM_FLAGS = -f elf -I $(SRC)
 
-.PHONY: all dirs clean
+.PHONY: all dirs clean task_1 task_1_2 task_2 task_2_2
 
-# TODO task_1_2 task_2 task_3 task_4
-all: task_1  task_1_2 task_2
 
-task_3: $(EXE_DIR)task_3
-task_4: $(EXE_DIR)task_4
+all: task_1  task_1_2 task_2 task_2_2
+
 
 dirs: 
 	mkdir -p $(BUILD_DIR) $(EXE_DIR)
+
+# Task_2_2
+task_2_2: $(EXE_DIR)task_2_2
+$(EXE_DIR)task_2_2: $(BUILD_DIR)task_2_2.o $(BUILD_DIR)driver.o $(BUILD_DIR)asm_io.o
+	gcc -m32 $(BUILD_DIR)driver.o $(BUILD_DIR)task_2_2.o $(BUILD_DIR)asm_io.o -o $(EXE_DIR)task_2_2
+
+$(BUILD_DIR)task_2_2.o:	$(SRC)task_2_2.asm | dirs
+	nasm $(NASM_FLAGS) $(SRC)task_2_2.asm -o $(BUILD_DIR)task_2_2.o
 
 # Task_2
 task_2: $(EXE_DIR)task_2 
