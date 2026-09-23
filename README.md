@@ -93,6 +93,62 @@ jnz Print_for_X     ; else: restart Loop
 ```
 This loop exits by making use of when repeat - 1 = 0 the zero flag is set to 1 so jz will only jump if the zero flag is true so it exits. 
 
+# Task 2_2
+## Key segments
+### Error Handling
+Error handling is done by holding a text string in the .data section
+``` assembly
+range_lower_enter   db  "Enter lower bound: ",0         ; 
+range_lower_err     db  "Lower bound >= 1 ",0           ;
+range_upper_enter   db  "Enter upper bound: ",0         ;
+range_upper_err     db  "Upper bound <= 100 ",0         ;
+range_lt_lower      db  "Upper bound > lower bound",0   ;
+```
+This allows for error code to simply load the corresponding error string print it and return to the most valid point of code e.g: 
+``` assembly
+err_upper:
+    mov eax,range_upper_err
+    call print_string
+    call print_nl
+    jmp enter_upper 
+```
+
+### Count Loop
+#### Sum
+``` assembly
+mov ebx,[range_lower_int]   ; ebx = range_lower_int
+add ebx,[loop_count]        ; ebx = loop_count + range_lower_int
+mov eax,[arr+ebx*4]         ; Load the current index (arr ptr + index * index_size) into eax 
+add eax,[count]             ; Add current count to number
+mov [count],eax             ; Save count back to mem
+```
+To find the sum I have to make use of the other registers in this case i have used the ebx reg since it general purpose. This is because to find the current index in the array we need $$CI = Arr\_ptr + (range\_lower\_int + loop\_count)*int\_size$$ so that may look like 
+``` assembly
+mov eax, [arr + (range\_lower\_int + loop\_count) * 4] 
+```
+But this does not work since that array cannot be indexed like this at runtime so instead we have to load a register instead. But because we want to load the result into the eax we cannot use eax so we use ebx. So our current index now becomes $$EBX = range\_lower\_int + loop\_count$$ $$CI = Arr\_ptr + EBX*int\_size$$
+which then leaves us with the assebmly 
+``` assembly
+mov ebx,[range_lower_int]   ; ebx = range_lower_int
+add ebx,[loop_count]        ; ebx = loop_count + range_lower_int
+mov eax,[arr+ebx*4]         ; Load the current index (arr ptr + index * index_size) into eax 
+```
+
+
+#### Loop increment
+``` assembly
+mov eax,[loop_count]
+add eax,1
+mov [loop_count],eax
+```
+
+#### Loop Break check
+```
+add eax,[range_lower_int]
+cmp eax,[range_upper_int]
+je print_count
+jmp count_loop
+```
 
 
 # Task 3 (makefile)

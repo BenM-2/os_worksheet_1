@@ -2,15 +2,15 @@
 
 segment .data
     arr dd  1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100
-    range_lower_enter   db  "Enter lower bound: ",0 ;
-    range_lower_err     db  "Lower bound >= 1 ",0    ;
-    range_upper_enter   db  "Enter upper bound: ",0 ;
-    range_upper_err     db  "Upper bound <= 100 ",0 ;
-    range_lt_lower      db  "Upper bound > lower bound",0
-    loop_count          dd  -1   ; Reserve loop count
-    sum_text1           db  "The sum of ",0 
-    sum_text2           db  " to ",0
-    sum_text3           db  " is ",0   
+    range_lower_enter   db  "Enter lower bound: ",0         ; 
+    range_lower_err     db  "Lower bound >= 1 ",0           ;
+    range_upper_enter   db  "Enter upper bound: ",0         ;
+    range_upper_err     db  "Upper bound <= 100 ",0         ;
+    range_lt_lower      db  "Upper bound > lower bound",0   ;
+    loop_count          dd  -1                              ; Reserve loop count
+    sum_text1           db  "The sum of ",0                 ; 
+    sum_text2           db  " to ",0                        ;  
+    sum_text3           db  " is ",0                        ;
 segment .bss
     range_upper_int resd    1   ; Reserve upper bound 
     range_lower_int resd    1   ; Reserve lower bound
@@ -60,11 +60,10 @@ segment .text
     
     count_loop:
         ; Adding
-        mov ebx,[range_lower_int]
-        add ebx,[loop_count]
-
-        mov eax,[arr+ebx*4]    ; Load the current index into eax 
-        add eax,[count]               ; Add current count to number
+        mov ebx,[range_lower_int]   ; ebx = range_lower_int
+        add ebx,[loop_count]        ; ebx = loop_count + range_lower_int
+        mov eax,[arr+ebx*4]         ; Load the current index (arr ptr + index * index_size) into eax 
+        add eax,[count]             ; Add current count to number
         mov [count],eax             ; Save count back to mem
         ; loop increment
         mov eax,[loop_count]
