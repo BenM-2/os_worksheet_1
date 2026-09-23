@@ -22,6 +22,7 @@ This works by simply loading int1 into eax then adding int2 then printing it
 
 # Task 1_2
 
+## Findings
 I have discovered that the integers are 32 bit signed ints due to adding the 32bit int limit and recieving a negative
 ``` bash
 ~/dev/uni-year-2/prep/asm_test$ make task_1_2 && ./build/exec/task_1_2
@@ -31,11 +32,29 @@ Enter a Number: 2147483647
 The sum of 2147483647 and 2147483647 is -2
 ``` 
 
-Ordinary addition works fine
-![alt text](image.png)
+Ordinary addition works fine:<br>
+![alt text](README_images/image.png)<br>
 
-letters provide an overflow of some sort: 
-![alt text](image-1.png)
+letters provide an overflow of some sort: <br>
+![alt text](README_images/image-1.png)<br>
+
+## Key segments
+### Text printing 
+``` assembly
+; Print enter msg
+mov eax, msg1       ; Move the Pointer to msg1 into eax
+call print_string   ; Call print string on the pointer
+```
+Here is the standard to printing a string by loading the pointer to the string into the eax then calling print to print it to the string
+
+### Number reading
+``` assembly
+; Read int into integer 1
+call read_int       ; Read the first int into integer into eax
+mov [integer1], eax ; save value held in eax to intgeter 1
+```
+Call read_int takes attempts to convert what was recieved into an int and saves it into eax
+from here the integer is saved from eax -> value of integer1
 
 
 # Task 2
