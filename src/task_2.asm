@@ -20,9 +20,10 @@ segment .text
 
         call read_int
         mov [repeats],eax   ; Save current value for read ints
-        cmp eax, 50    ; 
-        JNC GTE_50
-        jmp LT_50
+        
+        cmp eax, 50         ; if eax >= 50  
+        jnc GTE_50          ; jmp -> GTE_50 
+        jmp LT_50           ; else: jmp -> LT_50 (Error Message)
     
     LT_50:
         ; Print Err and jmp to Enter_Number Again
@@ -30,18 +31,17 @@ segment .text
         mov eax,lt50
         call print_string
         call print_nl
-        jmp Enter_Number
+        jmp Enter_Number    ; Re Enter Number 
 
     GTE_50:
         ; Passed First Test 
-        cmp eax, 100
-        jc LTE_100
-        call print_int
-        jmp GT_100
+        cmp eax, 100        ; if eax <= 100 
+        jc LTE_100          ; jmp LTE_100 
+        jmp GT_100          ; else: jmp -> GT_100 (Error Message)
 
     LTE_100:
-        call print_nl
-        jmp Print_for_X
+        call print_nl       ; Call print_nl for formating
+        jmp Print_for_X     ; Start loop to print Welcome for length of loop
 
     GT_100:
         ; Print Err and jmp to Enter_Number Again
@@ -54,15 +54,15 @@ segment .text
 
     Print_for_X:
         ; Print Welcome message
-        mov eax,welcome
-        call print_string
-        call print_nl
+        mov eax,welcome     ; welcome -> eax
+        call print_string   ; print "Welcome"
+        call print_nl       ; print \n
         ; Decrement loop
-        mov eax,[repeats]
-        sub eax,1
-        mov [repeats],eax
-        jz Close_Program 
-        jnz Print_for_X
+        mov eax,[repeats]   ; repeat -> eax
+        sub eax,1           ; decrement 
+        mov [repeats],eax   ; repeat = repeat -1
+        jz Close_Program    ; if repeat = 0 jmp -> close
+        jnz Print_for_X     ; else: restart Loop
 
 
     Close_Program:

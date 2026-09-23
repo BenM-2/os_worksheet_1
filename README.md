@@ -59,16 +59,41 @@ from here the integer is saved from eax -> value of integer1
 
 # Task 2
 
-
-For Testing Task 2 to check if all the loops where working correctly i used
+## Testing 
+For Testing Task 2 to check if all the loops where working correctly I used:
 ``` bash
 make task_2 && ./build/exec/task_2 > out.txt 
 ```
-This command builds task 2, runs it and pipes all outputs to out.txt overwriting all previous contents
-This allowed for me to see how many times the welcome message was printed using 
+This command builds task 2, runs it and pipes all outputs to out.txt overwriting all previous contents. Then i enter a valid range and after the program finishes. I run
 ``` bash
-cat out.txt | grep -o "Welcome" * | wc -l
+cat out.txt | grep -o "Welcome" out.txt | wc -l
 ```
+This command takes the contents of out.txt which holds the output of task_2 with the range input. Pipes the file into grep to search for the \"Welcome\" string. After this the output of grep is piped into wc to count the number of lines of the welcome message
+e.g:<br>
+![alt text](README_images/task_2_testing.png)<br>
+![alt text](README_images/task_2_testing2.png)
+
+## Findings
+
+## Key segments
+### Loops 
+Most of the loops in this program are done using cmp and then using jmp to go to the corresponding section. This is done using this table:<br>
+![alt text](README_images/JMP_Table.png)<br>
+> [!IMPORTANT]
+> This table is from PC Assembly Language, Paul A. Carter, November 16, 2019
+
+
+### Exit final loop
+``` assembly
+mov eax,[repeats]   ; repeat -> eax
+sub eax,1           ; decrement 
+mov [repeats],eax   ; repeat = repeat -1
+jz Close_Program    ; if repeat = 0 jmp -> close
+jnz Print_for_X     ; else: restart Loop
+```
+This loop exits by making use of when repeat - 1 = 0 the zero flag is set to 1 so jz will only jump if the zero flag is true so it exits. 
+
+
 
 # Task 3 (makefile)
 
