@@ -1,6 +1,10 @@
 # Worksheet 1
 
 # Task 1
+## Overview 
+Write a `.asm` file which adds 2 integers stored in global memory, and then outputs the result using 'call print_int'
+
+## Key Segments
 ``` assembly
 segment.data
     integer1    dd  15  ; First Int
@@ -21,7 +25,8 @@ This works by simply loading int1 into eax then adding int2 then printing it
 
 
 # Task 1_2
-
+## Overview
+Add to task_1 to accept input from the user and give an output message in the form of the sum of x and y is z where z is the result of x + y
 ## Findings
 I have discovered that the integers are 32 bit signed ints due to adding the 32bit int limit and recieving a negative
 ``` bash
@@ -58,6 +63,8 @@ from here the integer is saved from eax -> value of integer1
 
 
 # Task 2
+## Overview
+This tasks requires a `.asm` which Asks for the users name. Then requests the amount of times a welcome messages should be displayed. The range for the ouput should be between 50 and 100 and provide error messages when outside of this range or when input 1 > input 2.
 
 ## Testing 
 For Testing Task 2 to check if all the loops where working correctly I used:
@@ -82,6 +89,8 @@ Most of the loops in this program are done using cmp and then using jmp to go to
 > [!IMPORTANT]
 > This table is from PC Assembly Language, Paul A. Carter, November 16, 2019
 
+### String Reading
+
 
 ### Exit final loop
 ``` assembly
@@ -94,6 +103,15 @@ jnz Print_for_X     ; else: restart Loop
 This loop exits by making use of when repeat - 1 = 0 the zero flag is set to 1 so jz will only jump if the zero flag is true so it exits. 
 
 # Task 2_2
+## Overview
+Write a `.asm` file that stores an array from 1 -> 100 and that also takes in a lower bound and then an upper bound then sums all the integers between the two.
+## Setup
+A handy command to give the values of 1 -> 100 is to run 
+``` bash
+echo {1..100} | tr ' ' ',' > nums.txt 
+```
+Which creates 100 sequential numbers and replaces all the spaces with commas then outputs to nums.txt
+
 ## Key segments
 ### Error Handling
 Error handling is done by holding a text string in the .data section
