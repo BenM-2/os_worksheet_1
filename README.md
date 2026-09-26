@@ -2,7 +2,7 @@
 
 # Task 1
 ## Overview 
-Write a `.asm` file which adds 2 integers stored in global memory, and then outputs the result using 'call print_int'
+Write a `.asm` file which adds 2 integers stored in global memory, and then outputs the result using `call print_int`
 
 ## Key Segments
 ``` assembly
